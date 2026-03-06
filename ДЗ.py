@@ -41,14 +41,3 @@ class Triangle(Figure):
     def __str__(self):
         _, a = self.calculate()
         return f"ТРЕУГОЛЬНИК: Площадь = {a:.2f}"
-figures = [
-    Sphere(10),
-    Square(5),
-    Triangle(6, 4)
-]
-
-print("--- Результаты ДЗ ---")
-for fig in figures:
-    # Здесь работает ПОЛИМОРФИЗМ:
-    # Python сам знает, какой метод calculate() вызвать и как сработать str
-    print(fig)
