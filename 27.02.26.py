@@ -1,42 +1,37 @@
-class Device:
-    def __init__(self, name):
+from abc import ABC, abstractmethod
+
+class Employee(ABC):
+    def init(self, name, employee_id):
         self.name = name
-        self.__is_on = False
+        self.employee_id = employee_id
 
-    def turn_on(self):
-        self.__is_on = True
-        print(f"[{self.name}] Прибор включен")
+    @abstractmethod
+    def calculate_salary(self):
+        pass
 
-    def turn_off(self):
-        self.__is_on = False
-        print(f"[{self.name}] Прибор выключен")
+    def display_info(self):
+        print(f"ID: {self.employee_id} | Сотрудник: {self.name}", end=" | ")
 
-    def is_enabled(self):
-        return self.__is_on
+class FullTimeEmployee(Employee):
+    def init(self, name, employee_id, monthly_salary):
+        super().init(name, employee_id)
+        self.monthly_salary = monthly_salary
 
+    def calculate_salary(self):
+        return self.monthly_salary
 
-class Light(Device):
-    def __init__(self, name):
-        super().__init__(name)
-        self.brightness = 50
+class ContractEmployee(Employee):
+    def init(self, name, employee_id, hourly_rate, hours_worked):
+        super().init(name, employee_id)
+        self.hourly_rate = hourly_rate
+        self.hours_worked = hours_worked
 
-    def set_brightness(self, level):
-        if self.is_enabled():
-            self.brightness = level
-            print(f"[{self.name}] Яркость установлена на {self.brightness}%.")
-        else:
-            print(f"[{self.name}] Ошибка: Нельзя изменить яркость, пока свет выключен")
+    def calculate_salary(self):
+        return self.hourly_rate * self.hours_worked
 
+    def init(self, name, employee_id, salary):
+        super().init(name, employee_id)
+        self.salary = salary
 
-class AirConditioner(Device):
-    def __init__(self, name):
-        super().__init__(name)
-        self.temperature = 22
-
-    def set_temperature(self, temp):
-        if self.is_enabled():
-            self.temperature = temp
-            print(f"[{self.name}] Температура установлена на {self.temperature}°C.")
-        else:
-
-            print(f"[{self.name}] Ошибка: Кондиционер выключен. Сначала включите его")
+    def calculate_salary(self):
+        return self.salary - 5000
